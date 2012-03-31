@@ -1,4 +1,5 @@
 #include "ofxBvh.h"
+#include "libol.h"
 
 static inline void billboard();
 
@@ -173,23 +174,36 @@ void ofxBvh::draw()
 	ofPushStyle();
 	ofFill();
 	
+	//olBegin(OL_LINESTRIP);
 	for (int i = 0; i < joints.size(); i++)
 	{
 		ofxBvhJoint *o = joints[i];
 		glPushMatrix();
 		glMultMatrixf(o->getGlobalMatrix().getPtr());
 		
+		//olPushMatrix3();
+		//olMultMatrix3((float*)o->getGlobalMatrix().getPtr());
+		
 		if (o->isSite())
 		{
 			ofSetColor(ofColor::yellow);
-			billboard();
+			//billboard();
 			ofCircle(0, 0, 6);
+
+			//olVertex3(0, 0, 0, C_WHITE);
+			//olRect(-0.2, -0.2, 0.2, 0.2, C_WHITE);
 		}
 		else if (o->getChildren().size() == 1)
 		{
 			ofSetColor(ofColor::white);		
 			billboard();
 			ofCircle(0, 0, 2);
+			
+			//olBegin(OL_LINESTRIP);
+			//olVertex3(0, 0, 0, C_WHITE);
+			//olVertex3(0, 0, 0.001, C_WHITE);
+			//olEnd();
+			//olRect(-0.2, -0.2, 0.2, 0.2, C_WHITE);
 		}
 		else if (o->getChildren().size() > 1)
 		{
@@ -198,14 +212,43 @@ void ofxBvh::draw()
 			else
 				ofSetColor(ofColor::green);
 			
-			billboard();
+			//billboard();
 			ofCircle(0, 0, 4);
+			
+			//olVertex3(0, 0, 0, C_WHITE);
+			//olRect(-0.2, -0.2, 0.2, 0.2, C_WHITE);
 		}
-		
+				
 		glPopMatrix();
+		//olPopMatrix3();
 	}
 	
 	ofPopStyle();
+
+	//olScale3(0.01, 0.01, 0.01);
+	if (root != NULL)
+		drawol(root);
+}
+
+void ofxBvh::drawol(ofxBvhJoint *o)
+{
+	olPushMatrix3();
+	
+	if (!o->isRoot()) {
+		olBegin(OL_LINESTRIP);
+		olVertex3(0, 0, 0, C_WHITE);
+		olMultMatrix3((float*)o->getMatrix().getPtr());
+		olVertex3(0, 0, 0, C_WHITE);
+		olEnd();
+	} else {
+		olMultMatrix3((float*)o->getMatrix().getPtr());
+	}
+
+	int n = o->getChildren().size();
+	for (int i = 0; i < n; i++) {
+		drawol(o->getChildren()[i]);
+	}
+	olPopMatrix3();
 }
 
 bool ofxBvh::isFrameNew()

@@ -66,6 +66,7 @@ public:
 
 	void update();
 	void draw();
+	void drawol(ofxBvhJoint *o);
 	
 	bool isFrameNew();
 	

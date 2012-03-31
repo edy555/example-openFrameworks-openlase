@@ -26,4 +26,6 @@ class testApp : public ofBaseApp{
 	float rotate;
 	
 	float play_rate, play_rate_t;
+	
+	ofEasyCam cam;
 };

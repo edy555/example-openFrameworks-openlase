@@ -1,4 +1,5 @@
 #include "testApp.h"
+#include "libol.h"
 
 class Tracker
 {
@@ -52,7 +53,7 @@ const float trackDuration = 64.28;
 
 //--------------------------------------------------------------
 void testApp::setup()
-{
+{	
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	
@@ -92,6 +93,39 @@ void testApp::setup()
 			trackers.push_back(t);
 		}
 	}
+	
+#if 1
+	// setup OpenLase
+	OLRenderParams params;
+	
+	memset(&params, 0, sizeof params);
+	params.rate = 48000;
+	params.on_speed = 2.0/100.0;
+	params.off_speed = 2.0/20.0;
+	params.start_wait = 8;
+	params.start_dwell = 3;
+	params.curve_dwell = 0;
+	params.corner_dwell = 8;
+	params.curve_angle = cosf(30.0*(M_PI/180.0)); // 30 deg
+	params.end_dwell = 3;
+	params.end_wait = 7;
+	params.snap = 1/100000.0;
+	params.render_flags = RENDER_GRAYSCALE;
+	
+	params.start_wait = 15;
+	//params.end_wait = 15;
+	params.start_dwell = 8;
+	params.end_dwell = 8;
+	params.corner_dwell = 12;
+	//params.on_speed = 2.0/100.0;
+	//params.off_speed = 2.0/20.0;
+	
+	if(olInit(3, 30000) < 0) {
+		ofLogError("testApp", "fail to initialize openlase");
+	}
+	
+	olSetRenderParams(&params);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -122,9 +156,11 @@ void testApp::draw(){
 	glEnable(GL_DEPTH_TEST);
 	
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	
+		
 	ofPushMatrix();
 	{
+		cam.begin();
+#if 0		
 		ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
 		ofTranslate(0, 150);
 		
@@ -132,9 +168,9 @@ void testApp::draw(){
 		ofRotate(rotate, 0, 1, 0);
 		
 		ofScale(1, -1, 1);
-		
+#endif				
 		ofSetColor(ofColor::white);
-		
+
 		ofFill();
 		
 		// draw ground
@@ -144,10 +180,17 @@ void testApp::draw(){
 		ofLine(0, 100, 0, -100);
 		ofPopMatrix();
 		
+		olLoadIdentity3();
+		olLoadIdentity();
+		olPerspective(60, 1, 1, 100);
+		olTranslate3(0, -1, -4);
+		olScale3(0.01, 0.01, 0.01);
+		
 		// draw actor
 		for (int i = 0; i < bvh.size(); i++)
 		{
 			bvh[i].draw();
+			cout << " ";
 		}
 
 		// draw tracker
@@ -159,11 +202,16 @@ void testApp::draw(){
 		{
 			trackers[i]->draw();
 		}
+		
+		cam.end();
 	}
 	ofPopMatrix();
 	
 	ofSetColor(255);
 	ofDrawBitmapString("press any key to scratch\nplay_rate: " + ofToString(play_rate, 1), 10, 20);
+	
+	cout << "\n";
+	olRenderFrame(60);
 }
 
 //--------------------------------------------------------------

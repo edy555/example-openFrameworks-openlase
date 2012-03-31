@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		60EF067F1517A53600FC5D12 /* ofxBvh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 60EF067A1517A53600FC5D12 /* ofxBvh.cpp */; };
+		8F8CCB5D1525E97A00B18D48 /* libopenlase.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F8CCB5C1525E97A00B18D48 /* libopenlase.dylib */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -60,6 +61,11 @@
 /* Begin PBXFileReference section */
 		60EF067A1517A53600FC5D12 /* ofxBvh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBvh.cpp; sourceTree = "<group>"; };
 		60EF067B1517A53600FC5D12 /* ofxBvh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBvh.h; sourceTree = "<group>"; };
+		8F8CCB581525E96800B18D48 /* ilda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ilda.h; sourceTree = "<group>"; };
+		8F8CCB591525E96800B18D48 /* libol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libol.h; sourceTree = "<group>"; };
+		8F8CCB5A1525E96800B18D48 /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
+		8F8CCB5B1525E96800B18D48 /* trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace.h; sourceTree = "<group>"; };
+		8F8CCB5C1525E97A00B18D48 /* libopenlase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopenlase.dylib; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -102,6 +108,7 @@
 				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
+				8F8CCB5D1525E97A00B18D48 /* libopenlase.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +131,17 @@
 				60EF067B1517A53600FC5D12 /* ofxBvh.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		8F8CCB571525E96800B18D48 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				8F8CCB581525E96800B18D48 /* ilda.h */,
+				8F8CCB591525E96800B18D48 /* libol.h */,
+				8F8CCB5A1525E96800B18D48 /* text.h */,
+				8F8CCB5B1525E96800B18D48 /* trace.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -172,6 +190,7 @@
 		E45BE5980E8CC70C009D7055 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F8CCB5C1525E97A00B18D48 /* libopenlase.dylib */,
 				BBAB23CA13894EDB00AA2426 /* 3rd party frameworks */,
 				BBAB23C913894ECA00AA2426 /* system frameworks */,
 			);
@@ -181,6 +200,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				8F8CCB571525E96800B18D48 /* include */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -452,12 +472,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/kiss/lib/linux\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/kiss/lib/linux64\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/linux/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/osx/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/win32/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "example-sync-soundDebug";
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
@@ -549,12 +571,14 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/kiss/lib/linux\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/kiss/lib/linux64\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/linux/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/osx/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../../../addons/ofxTimeline/libs/sndfile/win32/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)\"";
 				PREBINDING = NO;
 				PRODUCT_NAME = "example-sync-sound";
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
