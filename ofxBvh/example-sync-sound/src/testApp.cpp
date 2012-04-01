@@ -173,6 +173,14 @@ void testApp::draw(){
 
 		ofFill();
 		
+		olLoadIdentity3();
+		olLoadIdentity();
+		olPerspective(60, 1, 1, 100);
+		
+		//olTranslate3(0, -1, -4);
+		//olScale3(0.01, 0.01, 0.01);		
+		olMultMatrix3(cam.getModelViewMatrix().getPtr());
+		
 		// draw ground
 		ofPushMatrix();
 		ofRotate(90, 1, 0, 0);
@@ -180,11 +188,16 @@ void testApp::draw(){
 		ofLine(0, 100, 0, -100);
 		ofPopMatrix();
 		
-		olLoadIdentity3();
-		olLoadIdentity();
-		olPerspective(60, 1, 1, 100);
-		olTranslate3(0, -1, -4);
-		olScale3(0.01, 0.01, 0.01);
+		olPushMatrix3();
+		olBegin(OL_LINESTRIP);
+		olVertex3(-100, 0, 0, C_WHITE);
+		olVertex3(100, 0, 0, C_WHITE);
+		olEnd();
+		olBegin(OL_LINESTRIP);
+		olVertex3(0, 0, -100, C_WHITE);
+		olVertex3(0, 0, 100, C_WHITE);
+		olEnd();
+		olPopMatrix3();
 		
 		// draw actor
 		for (int i = 0; i < bvh.size(); i++)
