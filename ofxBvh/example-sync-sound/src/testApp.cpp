@@ -70,6 +70,9 @@ void testApp::setup()
 	bvh[0].load("bvhfiles/aachan.bvh");
 	bvh[1].load("bvhfiles/kashiyuka.bvh");
 	bvh[2].load("bvhfiles/nocchi.bvh");
+	bvh[0].setName("AACHAN");
+	bvh[1].setName("KASHIYUKA");
+	bvh[2].setName("NOCCHI");
 	
 	for (int i = 0; i < bvh.size(); i++)
 	{
@@ -111,14 +114,16 @@ void testApp::setup()
 	params.end_wait = 7;
 	params.snap = 1/100000.0;
 	params.render_flags = RENDER_GRAYSCALE;
+	params.flatness = 1;
 	
-	params.start_wait = 15;
+	params.start_wait = 20;
 	//params.end_wait = 15;
-	params.start_dwell = 8;
-	params.end_dwell = 8;
-	params.corner_dwell = 12;
-	//params.on_speed = 2.0/100.0;
-	//params.off_speed = 2.0/20.0;
+	params.start_dwell = 15;
+	//params.end_dwell = 8;
+	//params.corner_dwell = 12;
+	
+	params.on_speed = 2.0/200.0;
+	params.off_speed = 2.0/40.0;
 	
 	if(olInit(3, 30000) < 0) {
 		ofLogError("testApp", "fail to initialize openlase");
@@ -188,6 +193,7 @@ void testApp::draw(){
 		ofLine(0, 100, 0, -100);
 		ofPopMatrix();
 		
+		olTranslate3(0, -100, 0);
 		olPushMatrix3();
 		olBegin(OL_LINESTRIP);
 		olVertex3(-100, 0, 0, C_WHITE);

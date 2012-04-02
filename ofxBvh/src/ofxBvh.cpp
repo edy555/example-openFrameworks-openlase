@@ -1,5 +1,6 @@
 #include "ofxBvh.h"
 #include "libol.h"
+#include "text.h"
 
 static inline void billboard();
 
@@ -226,8 +227,19 @@ void ofxBvh::draw()
 	ofPopStyle();
 
 	//olScale3(0.01, 0.01, 0.01);
-	if (root != NULL)
+	if (root != NULL) {
 		drawol(root);
+
+		if (!name.empty()) {
+			//const float *m = root->getMatrix().getPtr();
+			//olTranslate3(m[12], m[13], m[14]);
+			ofVec3f pos = root->getPosition();
+			olPushMatrix3();
+			olTranslate3(pos.x, pos.y, pos.z);
+			olDrawChar(olGetDefaultFont(), -10, 150, 40, C_WHITE, name[0]);
+			olPopMatrix3();
+		}
+	}
 }
 
 void ofxBvh::drawol(ofxBvhJoint *o)

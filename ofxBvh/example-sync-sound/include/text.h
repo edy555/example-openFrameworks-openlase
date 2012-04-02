@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdint.h>
 #include <stddef.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 typedef struct {
 	int flag;
 	float x;
@@ -47,4 +51,8 @@ float olGetCharOverlap(Font *font, float height);
 float olDrawChar(Font *fnt, float x, float y, float height, uint32_t color, char c);
 float olDrawString(Font *fnt, float x, float y, float height, uint32_t color, const char *s);
 
+#ifdef __cplusplus
+}
+#endif
+		
 #endif

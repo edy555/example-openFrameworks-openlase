@@ -67,6 +67,8 @@ public:
 	void update();
 	void draw();
 	void drawol(ofxBvhJoint *o);
+	void setName(string _name) { name = _name; }
+	string getName() { return name; }
 	
 	bool isFrameNew();
 	
@@ -122,4 +124,5 @@ protected:
 	
 	void parseMotion(const string& data);
 	
+	string name;
 };
